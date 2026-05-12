@@ -1,47 +1,49 @@
 {
-    "name": "sub-store-workers",
-    "version": "1.0.0",
-    "description": "Sub-Store Cloudflare Workers Adapter",
-    "type": "module",
-    "scripts": {
-        "prepare:quickjs-wasm": "bash scripts/copy-quickjs-wasm.sh",
-        "build:substore-deno": "node scripts/build-substore-deno-runtime.mjs",
-        "dev:workers": "pnpm run prepare:quickjs-wasm && vite dev --config vite.workers.config.js --host 0.0.0.0 --port 3000",
-        "dev:deno": "deno task dev:deno",
-        "build:workers": "pnpm run prepare:quickjs-wasm && vite build --config vite.workers.config.js",
-        "preview:workers": "pnpm run prepare:quickjs-wasm && vite preview --config vite.workers.config.js --host 0.0.0.0 --port 3000",
-        "fetch:substore": "bash scripts/fetch-substore.sh && pnpm run install:backend",
-        "install:backend": "cd sub-store/backend && pnpm install --no-frozen-lockfile --ignore-scripts",
-        "migrate:deno-pg": "deno run -A scripts/deno-postgres-migrate.mjs",
-        "deploy:workers:local": "pnpm run prepare:quickjs-wasm && npx wrangler deploy",
-        "deploy:workers:action": "bash -o pipefail -c 'pnpm run prepare:quickjs-wasm && npx wrangler deploy 2>&1 | sed -e \"/workers.dev/d\" -e \"/https:\\\\/\\\\//d\"'",
-        "deploy:workers:deno": "bash -o pipefail -c 'deno deploy --prod 2>&1 | grep -vEi \"https?://|url:\"'",
-        "tail": "npx wrangler tail --format=pretty"
-    },
-    "devDependencies": {
-        "@cloudflare/vite-plugin": "^1.18.0",
-        "@vitejs/plugin-react": "^5.1.2",
-        "vite": "^7.3.0",
-        "wrangler": "^4.61.0"
-    },
-    "dependencies": {
-        "@cloudflare/actors": "0.0.1-beta.6",
-        "@jitl/quickjs-wasmfile-release-sync": "^0.31.0",
-        "@marsidev/react-turnstile": "^1.4.0",
-        "buffer": "^6.0.3",
-        "jose": "^6.1.3",
-        "mmdb-lib": "^3.0.1",
-        "pg": "^8.20.0",
-        "quickjs-emscripten": "^0.31.0",
-        "react": "^19.2.3",
-        "react-dom": "^19.2.3",
-        "react-router-dom": "^7.11.0"
-    },
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild",
-            "sharp",
-            "workerd"
-        ]
-    }
+  "name": "sub-store-workers",
+  "version": "1.0.0",
+  "description": "Sub-Store Cloudflare Workers Adapter",
+  "type": "module",
+  "scripts": {
+    "prepare:quickjs-wasm": "bash scripts/copy-quickjs-wasm.sh",
+    "build:substore-deno": "node scripts/build-substore-deno-runtime.mjs",
+    "dev:workers": "pnpm run prepare:quickjs-wasm && vite dev --config vite.workers.config.js --host 0.0.0.0 --port 3000",
+    "dev:deno": "deno task dev:deno",
+    "build:workers": "pnpm run prepare:quickjs-wasm && vite build --config vite.workers.config.js",
+    "preview:workers": "pnpm run prepare:quickjs-wasm && vite preview --config vite.workers.config.js --host 0.0.0.0 --port 3000",
+    "fetch:substore": "bash scripts/fetch-substore.sh && pnpm run install:backend",
+    "install:backend": "cd sub-store/backend && pnpm install --no-frozen-lockfile --ignore-scripts",
+    "migrate:deno-pg": "deno run -A scripts/deno-postgres-migrate.mjs",
+    "deploy:workers:local": "pnpm run prepare:quickjs-wasm && npx wrangler deploy",
+    "deploy:workers:action": "bash -o pipefail -c 'pnpm run prepare:quickjs-wasm && npx wrangler deploy 2>&1 | sed -e \"/workers.dev/d\" -e \"/https:\\\\/\\\\//d\"'",
+    "deploy:workers:deno": "bash -o pipefail -c 'deno deploy --prod 2>&1 | grep -vEi \"https?://|url:\"'",
+    "tail": "npx wrangler tail --format=pretty",
+    "deploy": "bun run build:workers && wrangler deploy",
+    "preview": "bun run build:workers && wrangler dev"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.36.4",
+    "@vitejs/plugin-react": "^5.1.2",
+    "vite": "^7.3.0",
+    "wrangler": "^4.90.1"
+  },
+  "dependencies": {
+    "@cloudflare/actors": "0.0.1-beta.6",
+    "@jitl/quickjs-wasmfile-release-sync": "^0.31.0",
+    "@marsidev/react-turnstile": "^1.4.0",
+    "buffer": "^6.0.3",
+    "jose": "^6.1.3",
+    "mmdb-lib": "^3.0.1",
+    "pg": "^8.20.0",
+    "quickjs-emscripten": "^0.31.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.11.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
+  }
 }

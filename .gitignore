@@ -29,3 +29,8 @@ pnpm-lock.yaml
 
 # OS files
 .DS_Store
+
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
